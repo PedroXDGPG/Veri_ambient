@@ -3,6 +3,14 @@
 //-----------------------------------------------//
 // Modulo para correr la prueba //
 //-----------------------------------------------//
+`include "fifo.sv"
+`include "interface_transactions.sv"
+`include "driver.sv"
+`include "checker.sv"
+`include "score_board.sv"
+`include "agent.sv"
+`include "ambiente.sv"
+`include "test.sv"
 
 module test_bench;
   reg clk = 0;
