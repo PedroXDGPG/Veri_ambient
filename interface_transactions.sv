@@ -1,7 +1,7 @@
 ////////////////////////////////////////
 // Definición del tipo de transacciones posibles en la fifo //
 ////////////////////////////////////////
-typedef enum { lectura, escritura, reset} tipo_trans;
+typedef enum {lectura, escritura, reset} tipo_trans;
 
 ////////////////////////////////////////
 //Transacción: este objeto representa las transacciones que entran y salen de la fifo. //
@@ -16,7 +16,7 @@ class trans_fifo #(parameter width = 16);
 
     constraint const_retardo {retardo < max_retardo; retardo > 0;}
 
-typedef enum int {lectura, escritura, reset} tipo_trans;
+//typedef enum int {lectura, escritura, reset} tipo_trans;
 
     function new(int ret = 0, bit[width-1:0] dto = 0, int tmp = 0, tipo_trans tpo = lectura, int mx_rtrd = 10);
         this.retardo = ret;
@@ -34,7 +34,7 @@ typedef enum int {lectura, escritura, reset} tipo_trans;
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Tiempo=%g Tipo=%s Retardo=%g dato=0x%h", $time, tag, tiempo, tipo, retardo, dato);
+        $display("[%g] %s Tiempo=%g Tipo=%s Retardo=%g dato=0x%h", $time, tag, tiempo, this.tipo, this.retardo, this.dato);
     endfunction
 endclass
 
@@ -44,10 +44,8 @@ endclass
 ////////////////////////////////////////////////////////////
 
 interface fifo_if # (parameter width = 16) (
-
-    inpur clk
+    input clk
 );
-
  logic rst;
  logic pndng;
  logic full;
@@ -87,7 +85,7 @@ class trans_sb #(parameter width=16);
         this.latencia = this.tiempo_pop - this.tiempo_push;
     endtask
 
-    function print(string tag="");
+    function print(string tag);
         $display("[%g] %s dato=%h t_push=%g t_pop=%g cmplt=%g ovrflw=%g undrflw=%g rst=%g ltncy=%g", 
                  $time, 
                  tag, 
@@ -112,9 +110,6 @@ typedef enum {retardo_promedio, reporte} solicitud_sb;
 ////////////////////////////////////////
 typedef enum {llenado_aleatorio, trans_aleatoria, trans_especifica, sec_trans_aleatorias} instrucciones_agente;
 
-////////////////////////////////////////
-// Definición de los mailboxes con tipos específicos //
-////////////////////////////////////////
 
 ////////////////////////////////////////
 // Definición de mailboxes de tipo definido trans_fifo para comunicar las interfaces //

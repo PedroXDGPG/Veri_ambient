@@ -1,9 +1,9 @@
-class checker_c #(parameter width=16, parameter depth=8);
+class checker #(parameter width=16, parameter depth=8);
 
     trans_fifo #(.width(width)) transaccion; // Transacción recibida en el mailbox
     trans_fifo #(.width(width)) auxiliar;   // Transacción usada como auxiliar para leer el fifo emulado
-    trans_sb #(width) to_sb;                // Transacción usada para comunicarse con el scoreboard
-    trans_fifo emul_fifo[8];                // This queue is going to be used as golden reference for the fifo
+    trans_sb   #(.width(width)) to_sb;                // Transacción usada para comunicarse con el scoreboard
+    trans_fifo emul_fifo[$];                // This queue is going to be used as golden reference for the fifo
     trans_fifo_mbx drv_chkr_mbx;            // Este mailbox es el que comunica con el driver/monitor
     trans_sb_mbx chkr_sb_mbx;               // Este mailbox es el que comunica el checker con el scoreboard
     int contador_auxiliar;
@@ -23,7 +23,7 @@ class checker_c #(parameter width=16, parameter depth=8);
             to_sb.clean();
             case(transaccion.tipo)
                 lectura: begin
-                    if (0 != emul_fifo.size()) begin // Revisa si el Fifo no está vacío
+                    if (0 !== emul_fifo.size()) begin // Revisa si el Fifo no está vacío
                         auxiliar = emul_fifo.pop_front();
                         if(transaccion.dato == auxiliar.dato) begin
                             to_sb.dato_enviado = auxiliar.dato;
@@ -67,7 +67,7 @@ class checker_c #(parameter width=16, parameter depth=8);
                         auxiliar = emul_fifo.pop_front();
                         to_sb.clean();
                         to_sb.dato_enviado = auxiliar.dato;
-                        to_sb.tiempo_push = auxiliar.tiempo;
+                        to_sb.tiempo_push  = auxiliar.tiempo;
                         to_sb.reset = 1;
                         to_sb.print("Checker: Reset");
                         chkr_sb_mbx.put(to_sb);

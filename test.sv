@@ -29,5 +29,39 @@ class test #(parameter width = 16, parameter depth = 8);
     ambiente_inst.agent_inst.num_transacciones = num_transacciones;
     ambiente_inst.agent_inst.max_retardo = max_retardo;
   endfunction
+  
+  task run;
+      $display("[%g] El Test fue inicializado", $time);
+      fork
+          ambiente_inst.run();
+      join_none
 
+      instr_agent = llenado_aleatorio;
+      test_agent_mbx.put(instr_agent);
+      $display("[%g] Test: Enviada la primera instruccion al agente llenado aleatorio con num_transacciones %g", $time,num_transacciones);
+
+      instr_agent = trans_aleatoria;
+      test_agent_mbx.put(instr_agent);
+      $display("[%g] Test: Enviada la segunda instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
+
+      ambiente_inst.agent_inst.ret_spec = 3;
+      ambiente_inst.agent_inst.tpo_spec = escritura;
+      ambiente_inst.agent_inst.dto_spec = {width/4{4'h5}};
+      instr_agent = trans_especifica;
+      test_agent_mbx.put(instr_agent);
+      $display("[%g] Test: Enviada la tercera instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
+
+      instr_agent = sec_trans_aleatorias;
+      test_agent_mbx.put(instr_agent);
+      $display("[%g] Test: Enviada la cuarta instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
+
+      #10000
+      $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
+      instr_sb = retardo_promedio;
+      test_sb_mbx.put(instr_sb);
+      instr_sb = reporte;
+      test_sb_mbx.put(instr_sb);
+      #20
+      $finish;
+    endtask
 endclass

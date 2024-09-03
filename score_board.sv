@@ -2,7 +2,7 @@ class score_board #(parameter width=16);
 
     trans_sb_mbx chkr_sb_mbx;
     comando_test_sb_mbx test_sb_mbx;
-    trans_sb #(width) transaccion_entrante;
+    trans_sb #(.width(width)) transaccion_entrante;
     trans_sb scoreboard[$]; // esta es la estructura dinámica que maneja el scoreboard
     trans_sb auxiliar_array[$]; // estructura auxiliar usada para explorar el scoreboard
     trans_sb auxiliar_trans;
@@ -24,7 +24,7 @@ class score_board #(parameter width=16);
                     transacciones_completadas++;
                 end
                 scoreboard.push_back(transaccion_entrante);
-            end
+            end else begin
             if(test_sb_mbx.num() > 0) begin
                 test_sb_mbx.get(orden);
                 case(orden)

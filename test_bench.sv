@@ -13,7 +13,7 @@
 `include "test.sv"
 
 module test_bench;
-  reg clk = 0;
+  reg       clk;
   parameter width = 16;
   parameter depth = 8;
   test #( .depth(depth), .width(width) ) t0;

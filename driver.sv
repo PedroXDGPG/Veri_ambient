@@ -7,7 +7,7 @@ class driver #(parameter width = 16);
     task run();
         $display("[%g] El driver fue inicializado", $time);
         @(posedge vif.clk);
-        vif.rst = 0;
+        vif.rst = 1;
         @(posedge vif.clk);
         forever begin
             trans_fifo #(.width(width)) transaction;
