@@ -1,8 +1,4 @@
 `timescale 1ns/1ps
-
-//-----------------------------------------------//
-// Modulo para correr la prueba //
-//-----------------------------------------------//
 `include "fifo.sv"
 `include "interface_transactions.sv"
 `include "driver.sv"
@@ -12,18 +8,22 @@
 `include "ambiente.sv"
 `include "test.sv"
 
+//-----------------------------------------------//
+// Modulo para correr la prueba //
+//-----------------------------------------------//
+
 module test_bench;
-  reg       clk;
+  reg clk = 0;
   parameter width = 16;
   parameter depth = 8;
-  test #( .depth(depth), .width(width) ) t0;
+  test #(.depth(depth), .width(width)) t0;
 
-  fifo_if #( .width(width) ) _if(.clk(clk));
+  fifo_if #(.width(width)) _if(.clk(clk));
   always #5 clk = ~clk;
 
   fifo_flops #( .depth(depth), .bits(width) ) uut(
-    .Din(_if.data_in),
-    .Dout(_if.data_out),
+    .Din(_if.dato_in),
+    .Dout(_if.dato_out),
     .push(_if.push),
     .pop(_if.pop),
     .clk(_if.clk),
