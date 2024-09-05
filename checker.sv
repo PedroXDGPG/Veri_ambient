@@ -93,8 +93,8 @@ class checker #(parameter width=16, parameter depth=8);
                     if (0 !== emul_fifo.size()) begin
                         auxiliar = emul_fifo.pop_front();
                         if(transaccion.dato == auxiliar.dato) begin
-                            to_sb.dato_enviado = auxiliar.dato;
-                            to_sb.tiempo_push = auxiliar.tiempo;
+                            //to_sb.dato_enviado = auxiliar.dato;
+                            //to_sb.tiempo_push = auxiliar.tiempo;
                             to_sb.tiempo_pop = transaccion.dato;
                             to_sb.completado = 1;
                             to_sb.calc_latencia();
