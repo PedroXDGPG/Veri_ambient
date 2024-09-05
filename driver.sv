@@ -49,7 +49,7 @@ class driver #(parameter width = 16);
                     transaction.print("Driver: Transacción ejecutada");
                 end
                 esc_lec: begin
-
+                    @(negedge vif.clk);
                     vif.push = 1;
                     transaction.tiempo = $time;
                     // drv_chkr_mbx.put(transaction);
