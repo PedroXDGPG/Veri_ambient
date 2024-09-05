@@ -55,9 +55,9 @@ class test #(parameter width = 16, parameter depth = 8);
       test_agent_mbx.put(instr_agent);
       $display("[%g] Test: Enviada la cuarta instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
-      instr_agent = esc_lec_aleatoria;
-      test_agent_mbx.put(instr_agent);
-      $display("[%g] Test: Enviada la QUINTA instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
+      // instr_agent = esc_lec_aleatoria;
+      // test_agent_mbx.put(instr_agent);
+      // $display("[%g] Test: Enviada la QUINTA instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
 
       #10000

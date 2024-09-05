@@ -49,16 +49,16 @@ class driver #(parameter width = 16);
                     transaction.print("Driver: Transacción ejecutada");
                 end
                 esc_lec: begin
-                    @(posedge vif.clk);
+                    
                     vif.push = 1;
                     transaction.tiempo = $time;
-                    // drv_chkr_mbx.put(transaction);
+                    drv_chkr_mbx.put(transaction);
                     ////////////////////////////////////////////////
                     transaction.print("Driver: Transacción de escritura(esc_lec) ejecutada");
                             
                     transaction.dato = vif.dato_out;
-                    @(negedge vif.clk);
-                    vif.push = 0; // Desactiva la escritura
+                    @(posedge vif.clk);
+                    // vif.push = 0; // Desactiva la escritura
                     vif.pop = 1;
 
                     drv_chkr_mbx.put(transaction);
