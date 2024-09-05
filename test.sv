@@ -44,30 +44,20 @@ class test #(parameter width = 16, parameter depth = 8);
       test_agent_mbx.put(instr_agent);
       $display("[%g] Test: Enviada la segunda instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
-      // ambiente_inst.agent_inst.ret_spec = 3;
-      // ambiente_inst.agent_inst.tpo_spec = escritura;
-      // ambiente_inst.agent_inst.dto_spec = {width/4{4'h5}};
-      // instr_agent = trans_especifica;
-      // test_agent_mbx.put(instr_agent);
-      // $display("[%g] Test: Enviada la tercera instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
-
-      ambiente_inst.agent_inst.ret_spec = 5;
-      ambiente_inst.agent_inst.tpo_spec = esc_lec;
+      ambiente_inst.agent_inst.ret_spec = 3;
+      ambiente_inst.agent_inst.tpo_spec = escritura;
       ambiente_inst.agent_inst.dto_spec = {width/4{4'h5}};
-      instr_agent = esc_lec_aleatoria;
+      instr_agent = trans_especifica;
       test_agent_mbx.put(instr_agent);
-      $display("[%g] Test: Enviada la quinta instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
+      $display("[%g] Test: Enviada la tercera instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
       instr_agent = sec_trans_aleatorias;
       test_agent_mbx.put(instr_agent);
       $display("[%g] Test: Enviada la cuarta instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
-      // ambiente_inst.agent_inst.ret_spec = 5;
-      // ambiente_inst.agent_inst.tpo_spec = esc_lec_aleatoria;
-      // ambiente_inst.agent_inst.dto_spec = {width/4{4'h5}};
-      // instr_agent = trans_especifica;
-      // test_agent_mbx.put(instr_agent);
-      // $display("[%g] Test: Enviada la quinta instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
+      instr_agent = esc_lec_aleatoria;
+      test_agent_mbx.put(instr_agent);
+      $display("[%g] Test: Enviada la QUINTA instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
 
       #10000
