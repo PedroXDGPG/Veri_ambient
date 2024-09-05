@@ -56,10 +56,9 @@ class driver #(parameter width = 16);
                     ////////////////////////////////////////////////
                     transaction.print("Driver: Transacción de escritura(esc_lec) ejecutada");
                             
-                    vif.push = 0; // Desactiva la escritura
-
                     transaction.dato = vif.dato_out;
-                    //@(negedge vif.clk);
+                    @(posedge vif.clk);
+                    vif.push = 0; // Desactiva la escritura
                     vif.pop = 1;
 
                     drv_chkr_mbx.put(transaction);
