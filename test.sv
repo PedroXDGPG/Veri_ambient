@@ -52,9 +52,9 @@ class test #(parameter width = 16, parameter depth = 8);
       // $display("[%g] Test: Enviada la tercera instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
       ambiente_inst.agent_inst.ret_spec = 5;
-      ambiente_inst.agent_inst.tpo_spec = esc_lec_aleatoria;
+      ambiente_inst.agent_inst.tpo_spec = esc_lec;
       ambiente_inst.agent_inst.dto_spec = {width/4{4'h5}};
-      instr_agent = trans_especifica;
+      instr_agent = esc_lec_aleatoria;
       test_agent_mbx.put(instr_agent);
       $display("[%g] Test: Enviada la quinta instruccion al agente aleatorio con num_transacciones %g", $time,num_transacciones);
 
