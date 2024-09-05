@@ -59,7 +59,7 @@ class driver #(parameter width = 16);
                     vif.push = 0; // Desactiva la escritura
 
                     transaction.dato = vif.dato_out;
-                    @(posedge vif.clk);
+                    @(negedge vif.clk);
                     vif.pop = 1;
 
                     drv_chkr_mbx.put(transaction);
