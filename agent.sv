@@ -22,7 +22,7 @@ class agent #(parameter width = 16, parameter depth = 8);
                 $display("[%g] Agente: se recibe instruccion", $time);
                 test_agent_mbx.get(instruccion);
                 case(instruccion)
-                    llenado_aleatorio: begin // Esta instruccion genera num_tranacciones escrituras seguidas del mismo número de lecturas
+                    llenado_aleatorio: begin // Esta instruccion genera num_transacciones escrituras seguidas del mismo número de lecturas
                         for(int i = 0; i < num_transacciones; i++) begin
                             transaccion = new;
                             transaccion.max_retardo = max_retardo;
@@ -65,6 +65,19 @@ class agent #(parameter width = 16, parameter depth = 8);
                             agnt_drv_mbx.put(transaccion);
                         end
                     end
+                    ///////////////////////////////////////
+                    esc_lec_aleatoria: begin
+                        for(int i = 0; i < num_transacciones; i++) begin
+                            transaccion                 = new;
+                            transaccion.max_retardo     = max_retardo;
+                            transaccion.randomize();
+                            tpo_spec                    = esc_lec;
+                            transaccion.tipo            = tpo_spec;
+                            transaccion.print("Agente: transacción creada");
+                            agnt_drv_mbx.put(transaccion);
+                        end
+                    end
+
                 endcase
             end
         end

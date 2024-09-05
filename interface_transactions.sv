@@ -1,7 +1,7 @@
 ////////////////////////////////////////
 // Definición del tipo de transacciones posibles en la fifo //
 ////////////////////////////////////////
-typedef enum {lectura, escritura, reset} tipo_trans;
+typedef enum {lectura, escritura, reset, esc_lec} tipo_trans;
 
 ////////////////////////////////////////
 //Transacción: este objeto representa las transacciones que entran y salen de la fifo. //
@@ -108,7 +108,7 @@ typedef enum {retardo_promedio, reporte} solicitud_sb;
 ////////////////////////////////////////
 // Definición de estructura para generar comandos hacia el agente //
 ////////////////////////////////////////
-typedef enum {llenado_aleatorio, trans_aleatoria, trans_especifica, sec_trans_aleatorias} instrucciones_agente;
+typedef enum {llenado_aleatorio, trans_aleatoria, trans_especifica, sec_trans_aleatorias,esc_lec_aleatoria} instrucciones_agente;
 
 
 ////////////////////////////////////////

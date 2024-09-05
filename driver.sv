@@ -48,6 +48,23 @@ class driver #(parameter width = 16);
                     drv_chkr_mbx.put(transaction);
                     transaction.print("Driver: Transacción ejecutada");
                 end
+                esc_lec: begin
+
+                    vif.push = 1;
+                    transaction.tiempo = $time;
+                    // drv_chkr_mbx.put(transaction);
+                    ////////////////////////////////////////////////
+                    transaction.print("Driver: Transacción de escritura(esc_lec) ejecutada");
+                            
+                    vif.push = 0; // Desactiva la escritura
+
+                    transaction.dato = vif.dato_out;
+                    @(posedge vif.clk);
+                    vif.pop = 1;
+
+                    drv_chkr_mbx.put(transaction);
+                    transaction.print("Driver: Transacción de lectura(esc_lec) ejecutada");
+                end
                 default: begin
                     $display("[%g] Driver Error: la transacción recibida no tiene tipo válido", $time);
                     $finish;

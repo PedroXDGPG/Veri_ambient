@@ -73,6 +73,45 @@ class checker #(parameter width=16, parameter depth=8);
                         chkr_sb_mbx.put(to_sb);
                     end
                 end
+    
+                esc_lec: begin // en caso de esc_lec se hace una escritura y luego una lectura
+
+                    // Trans de escritura
+                    if(emul_fifo.size() == depth) begin
+                        auxiliar = emul_fifo.pop_front();
+                        to_sb.dato_enviado = auxiliar.dato;
+                        to_sb.tiempo_push = auxiliar.tiempo;
+                        to_sb.overflow = 1;
+                        to_sb.print("Checker: Overflow");
+                        chkr_sb_mbx.put(to_sb);
+                    end else begin
+                        transaccion.print("Checker: Escritura(esc_lec)");
+                        emul_fifo.push_back(transaccion);
+                    end
+
+                    // Trans de lectura
+                    if (0 !== emul_fifo.size()) begin
+                        auxiliar = emul_fifo.pop_front();
+                        if(transaccion.dato == auxiliar.dato) begin
+                            to_sb.dato_enviado = auxiliar.dato;
+                            to_sb.tiempo_push = auxiliar.tiempo;
+                            to_sb.tiempo_pop = transaccion.dato;
+                            to_sb.completado = 1;
+                            to_sb.calc_latencia();
+                            to_sb.print("Checker: Lectura completada(esc_lec)");
+                            chkr_sb_mbx.put(to_sb);
+                        end else begin
+                            transaccion.print("Checker: Error, el dato leído no coincide");
+                            $display("Dato_leido = %h, Dato_Esperado = %h", transaccion.dato, auxiliar.dato);
+                            $finish;
+                        end
+                    end else begin
+                        to_sb.tiempo_pop = transaccion.tiempo;
+                        to_sb.underflow = 1;
+                        to_sb.print("Checker: Underflow");
+                        chkr_sb_mbx.put(to_sb);
+                    end
+                end
 
                 default: begin
                     $display("[%g] Checker Error: la transacción recibida no tiene tipo valido", $time);
